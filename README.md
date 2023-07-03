@@ -65,7 +65,7 @@ Here are a full list of tasks that need to be completed:
 
 - If both providers are unreachable or return a 5xx error, then the service should now return a 503 Service Unavailable Error.
 
-- To save costs by avoiding calling either 3rd party, improve the PUT operation so that the providers are not called if an valuation has already occurred. NOTE: This is to save costs, not for any consistency concerns between Motorway and the 3rd party. (Don't worry about concurrency, if two requests for the same route occur at the same time, either response can be saved).
+- To save costs by avoiding calling either 3rd party, improve the PUT operation so that the providers are not called if a valuation has already occurred. NOTE: This is to save costs, not for any consistency concerns between Motorway and the 3rd party. (Don't worry about concurrency, if two requests for the same route occur at the same time, either response can be saved).
 
 - To help increase customer confidence regarding the valuation Motorway shows the user, there is a new requirement to show the name of the provider who provided the valuation to the user on the front end, e.g. "Valued by Trusted Company {X}", therefore the name of the provider that was used for the valuation needs to be persisted in the database and returned in the response.
 
@@ -80,7 +80,7 @@ Here are a full list of tasks that need to be completed:
     - Error code/message if applicable and the 
     - Name of the provider 
 
-    The details must be stored in a in a ProviderLogs table, which is correlated to a VRM, there could potentially be more than one log per VRM.
+    The details must be stored in a ProviderLogs table, which is correlated to a VRM, there could potentially be more than one log per VRM.
 
 - All new functionality should have test coverage in a new or updated existing test.
 
@@ -88,18 +88,18 @@ Here are a full list of tasks that need to be completed:
 
 ## 3rd Party APIs
 
-For the purposes of this code test, simple mocks have been created use a service called [Mocky](https://designer.mocky.io/) with simple canned responses. Assume, that these would be real RESTful services.  
+For the purposes of this code test, simple mocks have been created use a service called [Mocky](https://designer.mocky.io/) with simple canned responses. Assume, that these would be real RESTful/SOAP services.  
 
 ## 3rd Party OpenAPI Specs
 
 Details of the existing 3rd party (SuperCar Valuations) and the new provider (Premium Car Valuations) can be found here:  
 
-**Note , if you want to execute the swagger specs from swagger hub, you will need to click the "User browser instead" link at the bottom of the page, this stops the hub from firing through a proxy which does not play nice with the Mocking service being used for the purpose of the code test.**  
+**Note, if you want to execute the swagger specs from Swagger Hub, you will need to click the "User browser instead" link at the bottom of the page, this stops the hub from firing through a proxy which does not play nice with the Mocking service being used for the purpose of the code test.**  
 
 
 ### SuperCar Valuations
 
-This is the current and preferred provider used for valuations, it is a fairly modern and cost effective API.  
+This is the current and preferred provider used for valuations, it is a fairly modern and cost-effective API.  
 
 The OpenApi Specification can be found [here](https://app.swaggerhub.com/apis/PaulieWaulie-MW/supercar-valuations/0.1#/default/put_v3_118da5ea_32c5_41e1_9be8_95997cea8e93_valuations__vrm_)  
 
