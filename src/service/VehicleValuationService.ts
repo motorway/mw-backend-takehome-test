@@ -1,4 +1,4 @@
-import { Not, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { SuperCarValuationServiceClient } from '../ThirdParty/SuperCar/SuperCarValuationServiceClient';
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -30,7 +30,7 @@ export class VehicleValuationService {
     const valuation = await this.valuationsServiceClient.execute(vrm, mileage);
 
     // Save to DB.
-    this.valuationRepository.insert(valuation).catch((err) => { 
+    await this.valuationRepository.insert(valuation).catch((err) => { 
       if (err.code !== 'SQLITE_CONSTRAINT') {
         throw err;  
       }
