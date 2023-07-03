@@ -1,5 +1,5 @@
-import { Plate } from "../../model/Plate";
-import { SuperCarValuation } from "../../model/Valuation";
+import { Plate } from "./Plate";
+import { SuperCarValuation } from "./SuperCarValuation";
 
 export type SuperCarValuationResponse = {
   vin: string;
