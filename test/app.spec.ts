@@ -38,7 +38,7 @@ describe('ValuationController (e2e)', () => {
         mileage: 10000,
       };
 
-      var response = await request(app.getHttpServer())
+      const response = await request(app.getHttpServer())
         .put('/valuations/12345678')
         .send(requestBody);
 

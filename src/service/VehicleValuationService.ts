@@ -17,11 +17,15 @@ export class VehicleValuationService {
     this.valuationsServiceClient = new SuperCarValuationServiceClient();
   }
 
+  // write a function that takes a vrm and mileage and returns a valuation 
+
   async createValuation(vrm: string, mileage: number): Promise<VehicleValuation> {
 
     if (vrm === null || vrm === '' || vrm.length > 7) {
       throw new BadRequestException('vrm must be 7 characters or less');
     }
+
+    
 
     if (mileage == null || mileage <= 0) { 
       throw new BadRequestException('mileage must be a positive number');
@@ -45,7 +49,7 @@ export class VehicleValuationService {
       throw new BadRequestException('vrm must be 7 characters or less');
     }
 
-    var result = await this.valuationRepository.findOneBy({ vrm: vrm });
+    const result = await this.valuationRepository.findOneBy({ vrm: vrm });
 
     if (result == null) {
       throw new NotFoundException(`Valuation for VRM ${vrm} not found`);
