@@ -3,7 +3,6 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as path from 'path';
 
-import { SuperCarModule } from './super-car/super-car.module';
 import { VehicleValuation } from './valuation/models/vehicle-valuation';
 import { ValuationModule } from './valuation/valuation.module';
 
@@ -26,7 +25,6 @@ const ENV = process.env.NODE_ENV;
       entities: [VehicleValuation],
     }),
     ValuationModule,
-    SuperCarModule,
   ],
 })
 export class AppModule { }
