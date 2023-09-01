@@ -1,8 +1,9 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
+import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
+
 import { AppModule } from '../src/app.module';
-import { VehicleValuationRequest } from '../src/model/VehicleValuationRequest';
+import { VehicleValuationRequest } from '../src/valuation/models/vehicle-valuation-request';
 
 describe('ValuationController (e2e)', () => {
   let app: INestApplication;
@@ -42,8 +43,8 @@ describe('ValuationController (e2e)', () => {
         .put('/valuations/12345678')
         .send(requestBody);
 
-        expect(response.status).toBe(400);
-        expect(response.body.message).toBe('vrm must be 7 characters or less');
+      expect(response.status).toBe(400);
+      expect(response.body.message).toBe('vrm must be 7 characters or less');
     });
 
     it('should return 400 if mileage is missing', () => {
@@ -68,7 +69,7 @@ describe('ValuationController (e2e)', () => {
         .expect(400);
     });
 
-    it('should return with 200 with valid request', () => {
+    it('should return 200 with valid request', () => {
       const requestBody: VehicleValuationRequest = {
         mileage: 10000,
       };

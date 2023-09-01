@@ -1,8 +1,7 @@
-import { Entity, Column, PrimaryColumn } from 'typeorm';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
-@Entity() 
+@Entity()
 export class VehicleValuation {
-
   @PrimaryColumn({ length: 7 })
   vrm: string;
 
