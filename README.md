@@ -80,6 +80,7 @@ Here are a full list of tasks that need to be completed:
 
 **NOTE - We could have this task as only part of a senior + code test version, but I feel it should apply to all levels**
 - Refactor the code as you see fit to ensure it is more readable, maintainable and extensible.
+- Ensure explicity instance creation of `SuperCarValuationServiceClient` is replaced with dependency injection pattern supported by NestJS natively.
 
 **NOTE - I think we should drop this whole part, but we could have it as part of a senior + code test version**
 - To help with auditing service level agreements with the providers over an indefinite time period, there is a need to store the following details of the request:     

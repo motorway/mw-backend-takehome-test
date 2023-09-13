@@ -1,23 +1,22 @@
-import { ConfigModule } from '@nestjs/config';
 import { Module } from '@nestjs/common';
-import { ValuationController } from './ValuationController';
-import { VehicleValuation } from './model/VehicleValuation';
+import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { VehicleValuationService } from './service/VehicleValuationService';
-const path = require('path');
+import * as path from 'path';
 
-let ENV = process.env.NODE_ENV;
+import { VehicleValuation } from './valuation/models/vehicle-valuation';
+import { ValuationModule } from './valuation/valuation.module';
+
+const ENV = process.env.NODE_ENV;
 
 @Module({
-  imports: [  
+  imports: [
     ConfigModule.forRoot({
-      envFilePath: path.resolve(process.cwd(), 'env', !ENV ? '.env':  `.env.${ENV}`),
-      load: [() => {
-        ENV = process.env.NODE_ENV;
-        return {
-          ENV,
-        };
-      }],
+      envFilePath: path.resolve(
+        process.cwd(),
+        'env',
+        !ENV ? '.env' : `.env.${ENV}`,
+      ),
+      load: [() => ({ ENV })],
     }),
     TypeOrmModule.forRoot({
       type: 'sqlite',
@@ -25,9 +24,7 @@ let ENV = process.env.NODE_ENV;
       synchronize: process.env.SYNC_DATABASE === 'true',
       entities: [VehicleValuation],
     }),
-    TypeOrmModule.forFeature([VehicleValuation]),
+    ValuationModule,
   ],
-  controllers: [ValuationController],
-  providers: [VehicleValuationService],
 })
-export class AppModule {}
+export class AppModule { }
