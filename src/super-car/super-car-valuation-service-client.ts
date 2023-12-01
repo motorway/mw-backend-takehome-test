@@ -10,6 +10,7 @@ export class SuperCarValuationServiceClient {
   }
 
   async execute(vrm: string, mileage: number): Promise<VehicleValuation> {
+    console.log('[x] - should not be printed');
     const response = await axios.get<SuperCarValuationResponse>(
       `valuations/${vrm}?mileage=${mileage}`,
     );

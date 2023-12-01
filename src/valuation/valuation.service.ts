@@ -38,6 +38,7 @@ export class ValuationService {
 
     // Save to DB.
     await this.valuationRepository.insert(valuation).catch((err) => {
+      console.log('err:', err);
       if (err.code !== 'SQLITE_CONSTRAINT') {
         throw err;
       }

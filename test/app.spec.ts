@@ -4,6 +4,8 @@ import * as request from 'supertest';
 
 import { AppModule } from '../src/app.module';
 import { VehicleValuationRequest } from '../src/valuation/models/vehicle-valuation-request';
+import { SuperCarValuationServiceClient } from '../src/super-car/super-car-valuation-service-client';
+import { ValuationService } from '../src/valuation/valuation.service';
 
 describe('ValuationController (e2e)', () => {
   let app: INestApplication;
@@ -70,6 +72,14 @@ describe('ValuationController (e2e)', () => {
     });
 
     it('should return 200 with valid request', () => {
+      jest
+        .spyOn(ValuationService.prototype, 'createValuation')
+        .mockResolvedValueOnce({
+          vrm: 'ABC1234',
+          lowestValue: 1000,
+          highestValue: 2000,
+          midpointValue: 1500,
+        });
       const requestBody: VehicleValuationRequest = {
         mileage: 10000,
       };
