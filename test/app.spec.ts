@@ -90,4 +90,22 @@ describe('ValuationController (e2e)', () => {
         .expect(200);
     });
   });
+  describe('GET /valuations/', () => {
+    console.log('[x] - running get tests');
+    it('should return 200 with valid request', () => {
+      jest
+        .spyOn(ValuationService.prototype, 'getValuation')
+        .mockResolvedValueOnce({
+          vrm: 'ABC1234',
+          lowestValue: 1000,
+          highestValue: 2000,
+          midpointValue: 1500,
+        });
+
+      return request(app.getHttpServer())
+        .get('/valuations/ABC1234')
+        .send()
+        .expect(200);
+    });
+  });
 });
