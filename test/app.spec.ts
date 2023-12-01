@@ -4,8 +4,9 @@ import * as request from 'supertest';
 
 import { AppModule } from '../src/app.module';
 import { VehicleValuationRequest } from '../src/valuation/models/vehicle-valuation-request';
-import { SuperCarValuationServiceClient } from '../src/super-car/super-car-valuation-service-client';
 import { ValuationService } from '../src/valuation/valuation.service';
+import { Repository } from 'typeorm';
+import { VehicleValuation } from 'src/valuation/models/vehicle-valuation';
 
 describe('ValuationController (e2e)', () => {
   let app: INestApplication;
@@ -107,5 +108,16 @@ describe('ValuationController (e2e)', () => {
         .send()
         .expect(200);
     });
+  });
+  it('should return 400 if mileage is negative', async () => {
+    jest
+      .spyOn(Repository.prototype, 'findOneBy')
+      .mockResolvedValueOnce(Promise.resolve(null));
+    const response = await request(app.getHttpServer())
+      .get('/valuations/ABC1234')
+      .send();
+
+    expect(response.status).toBe(404);
+    expect(response.body.message).toBe(`Valuation for VRM ABC1234 not found`);
   });
 });
