@@ -92,7 +92,6 @@ describe('ValuationController (e2e)', () => {
     });
   });
   describe('GET /valuations/', () => {
-    console.log('[x] - running get tests');
     it('should return 200 with valid request', () => {
       jest
         .spyOn(ValuationService.prototype, 'getValuation')
@@ -109,7 +108,7 @@ describe('ValuationController (e2e)', () => {
         .expect(200);
     });
   });
-  it('should return 400 if mileage is negative', async () => {
+  it('should return 404 if valuation is NOT FOUND', async () => {
     jest
       .spyOn(Repository.prototype, 'findOneBy')
       .mockResolvedValueOnce(Promise.resolve(null));
