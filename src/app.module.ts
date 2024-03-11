@@ -5,6 +5,7 @@ import * as path from 'path';
 
 import { VehicleValuation } from './valuation/models/vehicle-valuation';
 import { ValuationModule } from './valuation/valuation.module';
+import { FallbackManagerModule } from './shared/fallback/fallback-manager.module';
 
 const ENV = process.env.NODE_ENV;
 
@@ -25,6 +26,7 @@ const ENV = process.env.NODE_ENV;
       entities: [VehicleValuation],
     }),
     ValuationModule,
+    FallbackManagerModule,
   ],
 })
-export class AppModule { }
+export class AppModule {}
