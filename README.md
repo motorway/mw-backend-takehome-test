@@ -116,7 +116,9 @@ The OpenApi Specification can be found [here](https://app.swaggerhub.com/apis/Pa
 
 This is the proposed fallback provider to be used for valuations, it is an old service and costs significantly more for each call.
 
-The OpenApi Specification can be found [here](https://app.swaggerhub.com/apis/PaulieWaulie-MW/premium-car-valuations/0.1#/default/get_valueCar)    
+The OpenApi Specification can be found [here](https://app.swaggerhub.com/apis/PaulieWaulie-MW/premium-car-valuations/0.1#/default/get_valueCar)
+
+The Uri for this test stub in Mocky is : https://run.mocky.io/v3/0050d561-d23e-4d73-bd75-06dfa7263428
    
    
 # Candidate Notes
