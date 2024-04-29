@@ -3,7 +3,7 @@ import axios from 'axios';
 import { VehicleValuation } from '../models/vehicle-valuation';
 import { SuperCarValuationResponse } from './types/super-car-valuation-response';
 
-export async function fetchValuatiomFromSuperCarValuation(
+export async function fetchValuationFromSuperCarValuation(
   vrm: string,
   mileage: number,
 ): Promise<VehicleValuation> {
