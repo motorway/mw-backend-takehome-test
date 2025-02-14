@@ -123,4 +123,4 @@ Here is a place for you to put any notes regarding the changes you made and the 
 
 - package json lock the node version
 - audit failing: imo you should potentially keep track of it and not allow for people to install unsafe pkg's. If I run audit fix I potentially already change the original test output, if I do not I am accepting 'risk' for my own machine
--
+- not a fan of the override for pkg's. I assume it was scaled down from some actuall pkg where it maybe made sense, but in context of audit here makes extra work

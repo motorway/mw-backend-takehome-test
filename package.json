@@ -13,7 +13,7 @@
     "third-party-api:serve-docs": "node third-party-api/docs.js"
   },
   "dependencies": {
-    "axios": "1.6.8",
+    "axios": "^1.6.8",
     "dotenv": "16.4.5",
     "fastify": "4.26.2",
     "pino": "9.0.0",
@@ -40,13 +40,13 @@
     "typescript": "5.4.5",
     "typescript-eslint": "7.7.1",
     "unplugin-swc": "1.4.5",
-    "vite": "5.2.10",
+    "vite": "5.4.12",
     "vite-plugin-node": "3.1.0",
     "vitest": "1.5.2"
   },
   "overrides": {
     "eslint": "9.1.1",
-    "vite": "5.2.10",
+    "vite": "5.4.12",
     "vitest": "1.5.2"
   }
 }
