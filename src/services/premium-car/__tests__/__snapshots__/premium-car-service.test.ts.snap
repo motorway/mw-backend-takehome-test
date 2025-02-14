@@ -1,0 +1,10 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`premiumCarService > request > ok 1`] = `
+VehicleValuation {
+  "highestValue": 10275,
+  "lowestValue": 9500,
+  "provider": "premiumcar",
+  "vrm": "ABC1234567",
+}
+`;

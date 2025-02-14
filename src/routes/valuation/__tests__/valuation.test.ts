@@ -1,5 +1,7 @@
-import axios from 'axios';
 import { fastify } from '~root/test/fastify';
+
+import { VehicleValuation } from '@app/models/vehicle-valuation';
+import { SupervisorService } from '@app/services/supervisor/supervisor.service';
 
 import { VehicleValuationRequest } from '../types/vehicle-valuation-request';
 
@@ -9,6 +11,11 @@ describe('ValuationController (e2e)', () => {
   let findOneByMock: ReturnType<typeof vi.fn>;
   let insertMock: ReturnType<typeof vi.fn>;
 
+  let supervisorService: SupervisorService;
+
+  const supervisorRequestMock = vi.fn();
+
+
   beforeAll(async () => {
     findOneByMock = vi.fn();
     insertMock = vi.fn();
@@ -17,6 +24,9 @@ describe('ValuationController (e2e)', () => {
       findOneBy: findOneByMock,
       insert: insertMock,
     });
+
+    supervisorService = fastify.supervisorService;
+    supervisorService.request = supervisorRequestMock;
   });
 
   afterAll(() => {
@@ -119,28 +129,37 @@ describe('ValuationController (e2e)', () => {
       expect(res.statusCode).toStrictEqual(400);
     });
 
-    it('should return 200 with valid request', async () => {
+    it('should return 500 when supervisor blocks', async () => {
       const requestBody: VehicleValuationRequest = {
         mileage: 10000,
       };
-
-      // findOneByMock.mockResolvedValueOnce({
-      //   vrm: 'ABC123',
-      //   value: 15000,
-      // });
-
       insertMock.mockResolvedValueOnce(true);
-      // insertMock.mockImplementation(async () => true);
 
-      vi.mocked(axios.get).mockResolvedValueOnce({
-        data: {
-          valuation: {
-            lowerValue: 15000,
-            upperValue: 20000,
-          },
-        },
+      supervisorRequestMock.mockImplementationOnce(() => { throw 'any error' });
+
+      const res = await fastify.inject({
+        url: '/valuations/ABC123',
+        body: requestBody,
+        method: 'PUT',
       });
 
+      expect(res.statusCode).toStrictEqual(500);
+    });
+
+    it('should return 200 with valid request when supervisor allow', async () => {
+      const requestBody: VehicleValuationRequest = {
+        mileage: 10000,
+      };
+      insertMock.mockResolvedValueOnce(true);
+
+      supervisorRequestMock.mockImplementationOnce(async () => {
+        return <VehicleValuation>{
+          highestValue: 1,
+          lowestValue: 3,
+          provider: 'supercar',
+          vrm: `ABC123`
+        }
+      });
 
       const res = await fastify.inject({
         url: '/valuations/ABC123',

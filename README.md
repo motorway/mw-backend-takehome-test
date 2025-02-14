@@ -121,6 +121,49 @@ The URI for this test stub in Mocky is https://run.mocky.io/v3/0dfda26a-3a5a-43e
 
 Here is a place for you to put any notes regarding the changes you made and the reasoning and what further changes you wish to suggest.
 
-- package json lock the node version
-- audit failing: imo you should potentially keep track of it and not allow for people to install unsafe pkg's. If I run audit fix I potentially already change the original test output, if I do not I am accepting 'risk' for my own machine
+## New dependency (Prometheus / Redis)
+
+Stored envs were adjustsed
+
+```bash
+docker compose up
+```
+
+## Failsafe
+
+As node is not greate with timeseries I went with Prometheus, but impementation over any store that handles timeseries natively will work.
+Current implemetation assumes that it can query Prometheus locally.
+
+There is a interesting disccussion to have, where to put Prometheus. Locally times are small and you get resilience, but if greater network is suffering on the error rate you will propagate the result.
+
+Any pub/sub could be implemented here to propagate and store those counters maybe on the level of single nodes - but in the end it all will depend if this sits in one data centere or more and what is this optimising for and if a storing the state of counter is important for example.
+
+It was not in brief, but seemed to me there need to be a backoff of minimum x ammount of request before the rate check should happen.
+
+And as those were 2 apis's i done them 'waterfally' but with bigger numbers of api's and maybe some generalisation of other use it should be changed to array of registered calls / succes / fail hooks.
+
+Once the Error Rate margin is crossed, time in future is set, untill which first api is effectivelly skipped.
+
+## Caching
+
+Added only cache wrapping the external api calls, but defo can be put in get in other places.
+
+## Thougts for refactor
+
+Would defo explore to merge all the services into one key into fastify. Was exploring both vite and fastify here so I am not hugelly opinionated. Maybe work on the services to actually implement class, as it was a bit of hassle in testing to access some of the properties in closure.
+
+Defo would aslo set later axios instance for this services, give more controll on testing definitelly.
+
+## Some general notes
+
+- package json should lock the node version
+- audit failing: imo you should potentially keep track of it and not allow for people to install unsafe pkg's. If I run audit fix I potentially already change the original test output, if I do not I am accepting 'risk' for my own machine. And then I come work for you and we all have a bad day ;]
 - not a fan of the override for pkg's. I assume it was scaled down from some actuall pkg where it maybe made sense, but in context of audit here makes extra work
+- would not keep the production.env in repo
+- those API mocks/stubs are not accesible, whats the point of keeping them there if the bring more confustion then anything? ;)
+- for missing values in db would be better to actually run migrations, but that seems out of scope of tasks
+- potentially error formats for error handling would need extra attention for the aroundAxios
+- 503 seems a bad kind of error - would suggest rather that loadbalancer is malfunctioning
+- I know its sqlite, but keys on strings always rubs me the wrong way
+
+Other then that had fun exploring both vite and fastify ;].

@@ -1,0 +1,23 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Metric test (e2e) > GET /metrics > should return 200 metrics 1`] = `
+"# HELP supercar_requests_total Total number of HTTP requests to Supercar
+# TYPE supercar_requests_total counter
+supercar_requests_total 0
+
+# HELP supercar_requests_errors_total Total number of failed HTTP requests to Supercar
+# TYPE supercar_requests_errors_total counter
+supercar_requests_errors_total 0
+"
+`;
+
+exports[`Metric test (e2e) > GET /metrics > should return 200 metrics after counter increse 1`] = `
+"# HELP supercar_requests_total Total number of HTTP requests to Supercar
+# TYPE supercar_requests_total counter
+supercar_requests_total 1
+
+# HELP supercar_requests_errors_total Total number of failed HTTP requests to Supercar
+# TYPE supercar_requests_errors_total counter
+supercar_requests_errors_total 1
+"
+`;

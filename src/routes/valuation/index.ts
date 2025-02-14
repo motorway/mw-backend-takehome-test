@@ -1,7 +1,9 @@
 import { FastifyInstance } from 'fastify';
-import { VehicleValuationRequest } from './types/vehicle-valuation-request';
-import { fetchValuationFromSuperCarValuation } from '@app/super-car/super-car-valuation';
+
+import { Generic503Error } from '@app/generic/error';
 import { VehicleValuation } from '@app/models/vehicle-valuation';
+
+import { VehicleValuationRequest } from './types/vehicle-valuation-request';
 
 export function valuationRoutes(fastify: FastifyInstance) {
   fastify.get<{
@@ -57,10 +59,12 @@ export function valuationRoutes(fastify: FastifyInstance) {
         });
     }
 
-    const valuation = await fetchValuationFromSuperCarValuation(vrm, mileage);
+    const valuation = await fastify.supervisorService.request(vrm, mileage).catch(() => {
+      throw new Generic503Error('External API fail');
+    });
 
     // Save to DB.
-    await valuationRepository.insert(valuation).catch((err) => {
+    await valuationRepository.insert(valuation!).catch((err) => {
       if (err.code !== 'SQLITE_CONSTRAINT') {
         throw err;
       }
