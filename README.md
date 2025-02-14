@@ -37,8 +37,9 @@ $ npm run test:coverage
 This API is a simple but important API for motorway that is responsible for retrieving valuations for cars from a 3rd party (SuperCar Valuations) by the VRM (Vehicle Registration Mark) and mileage.
 
 - The API has two routes
-	- A PUT (/valuations/{vrm}) request to create a valuation for a vehicle which accepts a small amount of input data and performs some simple validation logic.
-	- A GET (/valuations/{vrm}) request to get an existing valuation. Returns 404 if no valuation for the vrm exists.
+
+  - A PUT (/valuations/{vrm}) request to create a valuation for a vehicle which accepts a small amount of input data and performs some simple validation logic.
+  - A GET (/valuations/{vrm}) request to get an existing valuation. Returns 404 if no valuation for the vrm exists.
 
 - The PUT operation handles calling a third-party API to perform the actual valuation, there is some rudimentary mapping logic between Motorway & 3rd party requests/responses.
 - The PUT request is not truly idempotent so the 3rd party is called each time this operation is called and the code catches duplicate key exceptions when writing to the database.
@@ -81,15 +82,14 @@ Here are a full list of tasks that need to be completed:
 
 - To help with auditing service level agreements with the providers over an indefinite time period, there is a need to store the following details of the request:
 
-    - Request date and time
-    - Request duration
-    - Request url
-    - Response code
-    - Error code/message if applicable and the
-    - Name of the provider
+  - Request date and time
+  - Request duration
+  - Request url
+  - Response code
+  - Error code/message if applicable and the
+  - Name of the provider
 
-    The details must be stored in a ProviderLogs table, which is correlated to a VRM, there could potentially be more than one log per VRM.
-
+  The details must be stored in a ProviderLogs table, which is correlated to a VRM, there could potentially be more than one log per VRM.
 
 ## 3rd Party APIs
 
@@ -117,6 +117,10 @@ The OpenAPI Specification can be found [here](http://localhost:3002/docs).
 
 The URI for this test stub in Mocky is https://run.mocky.io/v3/0dfda26a-3a5a-43e5-b68c-51f148eda473.
 
-
 # Candidate Notes
+
 Here is a place for you to put any notes regarding the changes you made and the reasoning and what further changes you wish to suggest.
+
+- package json lock the node version
+- audit failing: imo you should potentially keep track of it and not allow for people to install unsafe pkg's. If I run audit fix I potentially already change the original test output, if I do not I am accepting 'risk' for my own machine
+-
