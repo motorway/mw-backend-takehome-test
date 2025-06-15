@@ -21,12 +21,10 @@ export function valuationRoutes(fastify: FastifyInstance) {
     const result = await valuationRepository.findOneBy({ vrm: vrm });
 
     if (result == null) {
-      return reply
-        .code(404)
-        .send({
-          message: `Valuation for VRM ${vrm} not found`,
-          statusCode: 404,
-        });
+      return reply.code(404).send({
+        message: `Valuation for VRM ${vrm} not found`,
+        statusCode: 404,
+      });
     }
 
     return result;
@@ -49,12 +47,10 @@ export function valuationRoutes(fastify: FastifyInstance) {
     }
 
     if (mileage === null || mileage <= 0) {
-      return reply
-        .code(400)
-        .send({
-          message: 'mileage must be a positive number',
-          statusCode: 400,
-        });
+      return reply.code(400).send({
+        message: 'mileage must be a positive number',
+        statusCode: 400,
+      });
     }
 
     const valuation = await fetchValuationFromSuperCarValuation(vrm, mileage);
